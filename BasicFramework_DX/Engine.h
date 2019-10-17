@@ -1,16 +1,14 @@
 #pragma once
-#include"D3DHelper.h"
+
 #include"EngineRenderer.h"
 #include "VirtualObject.h"
-
-#define WIDTH 800
-#define HEIGHT 600
-
 class Engine : public VirtualObject
 {
 private:
 	HWND WindowHandle;
 
+	UINT WIDTH = 800;
+	UINT HEIGHT = 600;
 
 	EngineRenderer Renderer;
 
@@ -18,6 +16,9 @@ public:
 	Engine() {}
 	Engine(HWND hWnd);
 	virtual ~Engine();
+
+	_inline void Resize(UINT NewWidth, UINT NewHeight) { WIDTH = NewWidth; HEIGHT = NewHeight; Renderer.Resize(WIDTH, HEIGHT); }
+
 
 private:
 	// VirtualObject을(를) 통해 상속됨

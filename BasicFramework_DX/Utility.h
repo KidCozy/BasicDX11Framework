@@ -1,13 +1,15 @@
 #pragma once
-#include"GraphicHeader.h"
+
+#pragma comment(lib, "Dbghelp.lib")
+#include<atlbase.h>
+#include<DbgHelp.h>
 #include<iostream>
 #include<string>
-#include<DbgHelp.h>
-
-#pragma comment(lib, "dbghelp.lib")
+#include<vector>
 
 #define MAX_STACKDEPTH 16 
 #define SUCCESS(Result) if(Result != S_OK) {DISPLAY_STACKONPOINT(); return false;}
+#define OUTSUCCESS(Result) if(Result != S_OK) { DISPLAY_STACKONPOINT(); return nullptr; }
 
 class CallStack
 {

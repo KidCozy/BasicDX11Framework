@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "D3DHelper.h"
 
 
@@ -146,3 +145,162 @@ bool D3DHelper::GenerateDepthStencilView(ID3D11DepthStencilView *& DepthStencilV
 
 	return true;
 }
+
+bool D3DHelper::GenerateRenderTarget(ID3D11RenderTargetView*& RenderTargetView, D3D11_RENDER_TARGET_VIEW_DESC* Desc, ID3D11Texture2D* Texture, ID3D11Device* Device)
+{
+	SUCCESS(Device->CreateRenderTargetView(Texture, Desc, &RenderTargetView));
+
+	return true;
+}
+
+BaseBuffer* D3DHelper::AllocConstantBuffer(ID3D11Device * Device, std::vector<Vertex>& Vertices, std::vector<UINT>& Indices)
+{
+	D3D11_BUFFER_DESC VBufferDesc{}, IBufferDesc{}, ABufferDesc{};
+
+	D3D11_SUBRESOURCE_DATA VSubresource{}, ISubresource{};
+
+	BaseBuffer* Buffer = new BaseBuffer();
+
+	VBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	VBufferDesc.ByteWidth = sizeof(Vertex) * Vertices.size();
+	VBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+
+	IBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	IBufferDesc.ByteWidth = sizeof(UINT) * Indices.size();
+	IBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+
+	ABufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	ABufferDesc.ByteWidth = sizeof(ConstantBuffer);
+	ABufferDesc.Usage = D3D11_USAGE_DEFAULT;
+
+	VSubresource.pSysMem = Vertices.data();
+	ISubresource.pSysMem = Indices.data();
+
+	OUTSUCCESS(Device->CreateBuffer(&VBufferDesc, &VSubresource, &Buffer->VBuffer));
+	OUTSUCCESS(Device->CreateBuffer(&IBufferDesc, &ISubresource, &Buffer->IBuffer));
+	OUTSUCCESS(Device->CreateBuffer(&ABufferDesc, nullptr, &Buffer->ABuffer));
+
+
+	return Buffer;
+}
+
+ID3D11InputLayout* D3DHelper::GenerateInputLayout(ID3D11Device * Device, LPCSTR Path)
+{
+	ID3D11InputLayout* InputLayout;
+
+	ID3D11ShaderReflection* Reflect;
+	D3D11_SHADER_DESC ShaderDesc{};
+
+	ID3DBlob* VBlob, *ErrBlob;
+
+	DWORD ShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
+
+	std::vector<D3D11_INPUT_ELEMENT_DESC> InputDesc;
+
+	HRESULT Result;
+
+#if defined _DEBUG
+	ShaderFlags = D3DCOMPILE_DEBUG;
+#endif
+
+	SUCCESS(D3DX11CompileFromFileA(Path, nullptr, nullptr, "VS", "vs_5_0", ShaderFlags, NULL, nullptr, &VBlob, &ErrBlob, &Result));
+	SUCCESS(D3DReflect(VBlob->GetBufferPointer(), VBlob->GetBufferSize(), IID_ID3D11ShaderReflection, (void**)&Reflect));
+	SUCCESS(Reflect->GetDesc(&ShaderDesc));
+
+	for (WORD i = 0; i < ShaderDesc.InputParameters; i++)
+	{
+		static D3D11_SIGNATURE_PARAMETER_DESC ParamDesc;
+		Reflect->GetInputParameterDesc(i, &ParamDesc);
+
+		D3D11_INPUT_ELEMENT_DESC Element{};
+
+		Element.SemanticName = ParamDesc.SemanticName;
+		Element.SemanticIndex = ParamDesc.SemanticIndex;
+		Element.InputSlot = 0;
+		Element.AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+		Element.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+		Element.InstanceDataStepRate = 0;
+
+		if(ParamDesc.Mask == 1)
+		{
+			if (ParamDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32)
+				Element.Format = DXGI_FORMAT_R32_UINT;
+			else if (ParamDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32)
+				Element.Format = DXGI_FORMAT_R32_FLOAT;
+			else if (ParamDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32)
+				Element.Format = DXGI_FORMAT_R32_SINT;
+		}
+		else if (ParamDesc.Mask <= 3)
+		{
+			if (ParamDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32)
+				Element.Format = DXGI_FORMAT_R32G32_UINT;
+			else if (ParamDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32)
+				Element.Format = DXGI_FORMAT_R32G32_FLOAT;
+			else if (ParamDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32)
+				Element.Format = DXGI_FORMAT_R32G32_SINT;
+		}
+		else if (ParamDesc.Mask <= 7)
+		{
+			if (ParamDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32)
+				Element.Format = DXGI_FORMAT_R32G32B32_UINT;
+			else if (ParamDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32)
+				Element.Format = DXGI_FORMAT_R32G32B32_FLOAT;
+			else if (ParamDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32)
+				Element.Format = DXGI_FORMAT_R32G32B32_SINT;
+		}
+		else if (ParamDesc.Mask <= 15)
+		{
+			if (ParamDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32)
+				Element.Format = DXGI_FORMAT_R32G32B32A32_UINT;
+			else if (ParamDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32)
+				Element.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+			else if (ParamDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32)
+				Element.Format = DXGI_FORMAT_R32G32B32A32_SINT;
+		}
+
+		InputDesc.push_back(Element);
+
+	}
+
+	Reflect->Release();
+
+	OUTSUCCESS(Device->CreateInputLayout(InputDesc.data(), InputDesc.size(), VBlob->GetBufferPointer(), VBlob->GetBufferSize(), &InputLayout));
+
+	return InputLayout;
+}
+
+ID3DX11Effect* D3DHelper::GenerateEffect(ID3D11Device * Device, _In_ LPCSTR InPath)
+{
+	USES_CONVERSION;
+
+	ID3DX11Effect* Effect;
+
+	DWORD ShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
+	HRESULT Result;
+
+	ID3DBlob* ErrBlob = nullptr;
+
+#if defined _DEBUG || defined DEBUG
+	ShaderFlags = D3DCOMPILE_DEBUG;
+#endif
+
+	LPCWSTR Path = A2W(InPath);
+
+	OUTSUCCESS(D3DX11CompileEffectFromFile(Path, nullptr, nullptr, ShaderFlags, 0, Device, &Effect, &ErrBlob));
+
+	return Effect;
+}
+
+ID3D11ShaderResourceView* D3DHelper::GenerateTexture(ID3D11Device * Device, std::wstring Resource)
+{
+	ID3D11ShaderResourceView* SRV;
+	std::wstring P = std::wstring(RELATIVE_ROOT) + Resource;
+	HRESULT Result;
+
+	D3DX11CreateShaderResourceViewFromFile(Device, P.c_str(), NULL, NULL, &SRV, &Result);
+
+	OUTSUCCESS(Result);
+
+	return SRV;
+}
+

@@ -161,6 +161,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+
+	case WM_SIZE:
+	{
+		RECT Rect;
+		GetClientRect(hWnd, &Rect);
+
+		std::cout << "WM_SIZE" << std::endl;
+		
+		GEngine.Resize(Rect.right, Rect.bottom);
+
+	}
+	break;
     case WM_PAINT:
         {
             PAINTSTRUCT ps;

@@ -1,73 +1,175 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="리소스 파일">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{c3d9cbb4-e436-4d54-85b4-ce1a020a3bce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{8cc56b99-b285-4109-8d90-2e8e908712e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{9a65469b-e225-406b-bda8-77e6831db041}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{dd566804-4206-410b-8b7b-c9766bb7b153}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Misc">
+      <UniqueIdentifier>{5ddbb433-8f4f-4c08-ac08-3d8e446e6dab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\cpp">
+      <UniqueIdentifier>{bb1939a1-164c-4bc9-948c-45eb486a58e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\h">
+      <UniqueIdentifier>{fbc0808a-ea02-4177-aac6-a7723aca9653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Misc\cpp">
+      <UniqueIdentifier>{c028e7e0-9980-4298-bed4-f60aee908283}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Misc\h">
+      <UniqueIdentifier>{af329d24-f984-4a6f-ad1b-11609d89adf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\cpp">
+      <UniqueIdentifier>{6410c7b2-1f3f-472a-ab98-caed68dac69f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\h">
+      <UniqueIdentifier>{b8d06b87-20ab-488a-992d-f4fa8169746a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\cpp">
+      <UniqueIdentifier>{af2edc3e-8663-49d2-99c8-fec2d095a68b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\h">
+      <UniqueIdentifier>{65ad706b-0b0c-40a7-a2ea-ff4819133946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\cpp">
+      <UniqueIdentifier>{e3047134-ef10-40b0-85dd-334722b7d89f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\h">
+      <UniqueIdentifier>{09e2656f-55f3-4063-90e1-52e2111608f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry">
+      <UniqueIdentifier>{acbc9a48-cbc4-4490-87f5-c15d36f63009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry\cpp">
+      <UniqueIdentifier>{5a41bb0d-8fcf-4061-ac75-da81dd7f7735}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry\h">
+      <UniqueIdentifier>{1f949847-787b-4c18-a226-56d744f3b4d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{7e3420ae-880a-4045-8ff9-7859abd078b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Camera.h">
+      <Filter>Entity\h</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicFramework_DX.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="D3DHelper.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Utility.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Model.h">
+      <Filter>Entity\h</Filter>
     </ClInclude>
     <ClInclude Include="VirtualObject.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Entity\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Misc\h</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Misc\h</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Misc\h</Filter>
     </ClInclude>
     <ClInclude Include="GraphicHeader.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Utility\h</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjLoader.h">
+      <Filter>Utility\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>Utility\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Math\h</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicFramework_DX.h">
+      <Filter>Core\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Core\h</Filter>
     </ClInclude>
     <ClInclude Include="EngineRenderer.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Core\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Quad.h">
+      <Filter>Geometry\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Entity\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Entity\h</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometries.h">
+      <Filter>Geometry\h</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomMesh.h">
+      <Filter>Geometry\h</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceSingle.h" />
+    <ClInclude Include="D3DHelper.h">
+      <Filter>Utility\h</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Entity\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="BasicFramework_DX.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="D3DHelper.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Utility.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Model.cpp">
+      <Filter>Entity\cpp</Filter>
     </ClCompile>
     <ClCompile Include="VirtualObject.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Entity\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Misc\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DHelper.cpp">
+      <Filter>Utility\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjLoader.cpp">
+      <Filter>Utility\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility.cpp">
+      <Filter>Utility\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Math\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicFramework_DX.cpp">
+      <Filter>Core\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Core\cpp</Filter>
     </ClCompile>
     <ClCompile Include="EngineRenderer.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Core\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Quad.cpp">
+      <Filter>Geometry\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Entity\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Entity\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomMesh.cpp">
+      <Filter>Geometry\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceSingle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BasicFramework_DX.rc">
@@ -81,5 +183,10 @@
     <Image Include="BasicFramework_DX.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DefaultShader.fx">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

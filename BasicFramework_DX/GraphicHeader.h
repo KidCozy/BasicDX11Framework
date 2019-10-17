@@ -1,5 +1,42 @@
 #pragma once
-#include<D3D11.h>
+
+
+#include<d3d11.h>
+#include<D3DX11.h>
+#include<d3dcompiler.h>
+#include<dxgi.h>
+#include<DirectXMath.h>
+
+#include<Windows.h>
+
+/*d3d11.lib
+d3dx11.lib
+d3dcompiler.lib
+dxgi.lib
+Effects11d.lib*/
+struct Vertex
+{
+	DirectX::XMFLOAT3 Position;
+	DirectX::XMFLOAT2 UV;
+	DirectX::XMFLOAT3 Normal;
+	DirectX::XMFLOAT4 Color;
+	//DirectX::XMFLOAT3 Tangent;
+	//DirectX::XMFLOAT3 Binormal;
+};
+
+struct ConstantBuffer
+{
+	DirectX::XMMATRIX World;
+	DirectX::XMMATRIX View;
+	DirectX::XMMATRIX Projection;
+};
+
+struct BaseBuffer
+{
+	ID3D11Buffer* VBuffer = nullptr;
+	ID3D11Buffer* IBuffer = nullptr;
+	ID3D11Buffer* ABuffer = nullptr;
+};
 
 struct GBuffer
 {
